@@ -60,4 +60,3 @@ export const removeUser = (id) => dispatch => request.delete(`api/phonebooks/${i
         console.log(error)
         dispatch(removePhonebookFailure())
     })
-/** end remove phonebooks */
