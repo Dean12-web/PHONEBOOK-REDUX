@@ -1,10 +1,10 @@
 import PhoneItem from "./PhoneItem"
-export default function PhoneList({ users, remove, update,containerRef}) {
+export default function PhoneList({ phonebooks, remove, update,containerRef}) {
     return (
         <div ref={containerRef} style={{ height:'100vh', overflowY:"scroll" }}>
             <ul>
                 {
-                    users.map((user) => (
+                    phonebooks.map((user) => (
                         <PhoneItem
                             key={user.id}
                             user={user}
