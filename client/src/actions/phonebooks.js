@@ -36,7 +36,7 @@ export const addUser = (name, phone) => dispatch => {
     dispatch(addPhonebookDraw({ id, name, phone }))
     request.post(`api/phonebooks`, { name, phone }).then((response) => {
         dispatch(addPhonebookSuccess(id, response.data.data.phonebooks))
-        window.location.reload(); // Refresh the page
+        // window.location.reload(); // Refresh the page
     }).catch((error) => {
         console.log(error)
         dispatch(addPhonebookFailure(id))
