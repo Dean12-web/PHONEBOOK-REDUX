@@ -37,8 +37,8 @@ router.get('/phonebooks', async (req, res, next) => {
             attributes: ['id', 'name', 'phone', 'avatar'],
             where: params,
             order: [[sortBy, sortMode]],
-            // limit,
-            // offset,
+            limit,
+            offset,
         });
         res.status(200).json(new Response({
             phonebooks,
