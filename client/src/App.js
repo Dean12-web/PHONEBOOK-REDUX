@@ -83,23 +83,23 @@ function App() {
 
     }
 
-    const fillteredData = data.filter((entry) => {
-        const nameMatch = entry.name.toLowerCase().includes(searchQuery.toLowerCase())
-        return nameMatch
-    })
+    // const fillteredData = data.filter((entry) => {
+    //     const nameMatch = entry.name.toLowerCase().includes(searchQuery.toLowerCase())
+    //     return nameMatch
+    // })
 
-    const sortedData = fillteredData.sort((a,b) =>{
-        const aValue = a[sortBy].toLowerCase()
-        const bValue = b[sortBy].toLowerCase()
+    // const sortedData = fillteredData.sort((a,b) =>{
+    //     const aValue = a[sortBy].toLowerCase()
+    //     const bValue = b[sortBy].toLowerCase()
 
-        if(aValue < bValue){
-            return sortMode === 'asc' ? -1 : 1
-        }else if(aValue > bValue){
-            return sortMode === 'asc' ? 1 : -1
-        }else{
-            return 0
-        }
-    })
+    //     if(aValue < bValue){
+    //         return sortMode === 'asc' ? -1 : 1
+    //     }else if(aValue > bValue){
+    //         return sortMode === 'asc' ? 1 : -1
+    //     }else{
+    //         return 0
+    //     }
+    // })
     return (
         <Router>
             <Routes>
@@ -109,7 +109,7 @@ function App() {
                                             sortBy={sortBy} 
                                             onSortChange={handleSortChange}/>}>
                     <Route index element={<PhoneBox
-                                            data={sortedData} />} />
+                                            data={data} />} />
                     <Route path="add" element={<PhoneForm />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>

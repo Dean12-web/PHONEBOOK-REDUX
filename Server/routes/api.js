@@ -7,7 +7,7 @@ const { Response } = require('../helpers/util')
 
 /* GET users listing. */
 router.get('/phonebooks', async (req, res, next) => {
-    try { 
+    try {
         const { name, phone } = req.query;
         let params = {};
         let sortBy = req.query.sortBy || 'name';
@@ -37,17 +37,19 @@ router.get('/phonebooks', async (req, res, next) => {
             attributes: ['id', 'name', 'phone', 'avatar'],
             where: params,
             order: [[sortBy, sortMode]],
-            // limit,
-            // offset,
-        });
-        res.status(200).json(new Response({
-            phonebooks,
-            page,
             limit,
-            pages,
-            total,
-            success: 'Success Showing Data User',
-        }));
+            offset,
+        });
+        res.status(200).json(
+            new Response({
+                phonebooks,
+                page: req.query.page,
+                limit,
+                pages,
+                total,
+                success: 'Success Showing Data User',
+            })
+        );
     } catch (error) {
         console.log(error);
         res.status(500).json(new Response('Error Showing Data User', false));
