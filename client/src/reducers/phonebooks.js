@@ -1,24 +1,7 @@
-const initialState = {
-    data: [],
-    page: 1,
-    prevPage:0,
-    nextPage:2,
-    isLoading: false,
-    hasMore: true,
-    sortBy:'name',
-    sortMode:'desc',
-}
-export default function phonebooks(state = initialState, action) {
+export default function phonebooks(state = [], action) {
     switch (action.type) {
         case 'LOAD_PHONEBOOK_SUCCESS':
-            return {
-                ...state,
-                data: [...action.phonebooks],
-                page: state.page,
-                nextPage : state.nextPage + 1,
-                isLoading: false,
-                hasMore: action.phonebooks.length > 0
-            }
+            return action.phonebooks.map(item => ({...item, sent:true}))
 
         case 'ADD_PHONEBOOOK_DRAW':
             return [{ ...action.phonebooks, sent: true }, ...state]
@@ -46,7 +29,6 @@ export default function phonebooks(state = initialState, action) {
             })
         case 'REMOVE_PHONEBOOK_FAILURE':
             return state.filter(item => item.id !== action.id)
-        case 'REMOVE_PHONEBOOK_FAILURE':
         case 'LOAD_PHONEBOOK_FAILURE':
         default:
             return state

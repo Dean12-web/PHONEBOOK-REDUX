@@ -10,11 +10,13 @@ const loadPhonebookSuccess = (phonebooks) => ({ type: "LOAD_PHONEBOOK_SUCCESS", 
 
 const loadPhonebookFailure = () => ({ type: "LOAD_PHONEBOOK_FAILURE" })
 
-export const fetchData = (page) => (dispatch) => {
-    dispatch({ type: 'LOAD_PHONEBOOK_REQUEST' })
+export const fetchData = (page) => (dispatch, getState) => {
     request.get(`api/phonebooks?page=${page}`).then((response) => {
         if (response.data.success) {
+            // dispatch({type:'UPDATE_PARAMS',params:{isLoading : true}})
+            // dispatch({type:'UPDATE_PARAMS',params:{page:getState().pagination.prevPage + 1}})
             dispatch(loadPhonebookSuccess(response.data.data.phonebooks))
+            // dispatch({type:'UPDATE_PARAMS',params:{page:state.pagination.prevPage + 1}})
         } else {
             dispatch(loadPhonebookFailure())
         }
