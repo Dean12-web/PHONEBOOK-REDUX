@@ -1,14 +1,17 @@
 export default function phonebooks(state = [], action) {
     switch (action.type) {
         case 'LOAD_PHONEBOOK_SUCCESS':
-            return action.phonebooks.map(item => ({...item, sent:true}))
+            // console.log(action)
+            return action.phonebooks.map(item => ({...item, sent: true}))
 
-        case 'ADD_PHONEBOOOK_DRAW':
-            return [{ ...action.phonebooks, sent: true }, ...state]
+        case 'ADD_PHONEBOOK_DRAW':
+            return [{ ...action.phonebook, sent: true }, ...state]
         case 'ADD_PHONEBOOK_SUCCESS':
             return state.map(item => {
+                // console.log(item)
+                // console.log(action.phonebook.id)
                 if (item.id === action.id) {
-                    item.id = action.phonebooks.id
+                    item.id = action.phonebook.id
                 }
                 return item
             })

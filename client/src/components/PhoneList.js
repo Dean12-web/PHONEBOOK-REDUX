@@ -1,16 +1,15 @@
-import { useEffect } from "react";
 import PhoneItem from "./PhoneItem"
-export default function PhoneList({ users, remove, update }) {
+export default function PhoneList({ phonebooks, remove, update }) {
     return (
         <div style={{ height: '250px', overflowY: "scroll" }}>
             <ul>
                 {
-                    users.map((user) => (
+                    phonebooks.map((phonebook) => (
                         <PhoneItem
-                            key={user.id}
-                            user={user}
+                            key={phonebook.id}
+                            phonebook={phonebook}
                             update={update}
-                            remove={() => remove(user.id)} />
+                            remove={() => remove(phonebook.id)} />
                     ))
                 }
             </ul>

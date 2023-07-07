@@ -5,7 +5,7 @@ export default function PhoneBox({data, updateUser, removeUser}) {
         <div className="container mt-3">
             <main className="mt-3">
                 <PhoneList
-                    users={data}
+                    phonebooks={data}
                     update={updateUser}
                     remove={removeUser}/>
             </main>
