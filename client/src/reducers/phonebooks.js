@@ -20,23 +20,23 @@ export default function phonebooks(state = initialState, action) {
                 hasMore: action.phonebooks.length > 0
             }
 
-        case 'ADD_PHONEBOOOKS_DRAW':
+        case 'ADD_PHONEBOOOK_DRAW':
             return [{ ...action.phonebooks, sent: true }, ...state]
-        case 'ADD_PHONEBOOKS_SUCCESS':
+        case 'ADD_PHONEBOOK_SUCCESS':
             return state.map(item => {
                 if (item.id === action.id) {
                     item.id = action.phonebooks.id
                 }
                 return item
             })
-        case 'ADD_PHONEBOOKS_FAILURE':
+        case 'ADD_PHONEBOOK_FAILURE':
             return state.map(item => {
                 if (item.id === action.id) {
                     item.sent = false
                 }
                 return item
             })
-        case 'UPDATE_PHONEBOOKS_SUCCESS':
+        case 'UPDATE_PHONEBOOK_SUCCESS':
             return state.map(item => {
                 if (item.id === action.id) {
                     item.name = action.phonebooks.name
@@ -44,7 +44,7 @@ export default function phonebooks(state = initialState, action) {
                 }
                 return item
             })
-        case 'REMOVE_PHONEBOOKS_FAILURE':
+        case 'REMOVE_PHONEBOOK_FAILURE':
             return state.filter(item => item.id !== action.id)
         case 'REMOVE_PHONEBOOK_FAILURE':
         case 'LOAD_PHONEBOOK_FAILURE':
