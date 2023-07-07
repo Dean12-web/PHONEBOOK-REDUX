@@ -58,7 +58,8 @@ function App() {
     const data = useSelector((state) => state.phonebooks)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(fetchData())
+        const page = 1
+        dispatch(fetchData(page))
     }, [dispatch])
     return (
         <Router>

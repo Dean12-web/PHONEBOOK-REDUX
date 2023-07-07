@@ -1,7 +1,25 @@
-export default function phonebooks(state = [], action) {
+const initialState = {
+    data: [],
+    page: 1,
+    prevPage:0,
+    nextPage:2,
+    isLoading: false,
+    hasMore: true,
+    sortBy:'name',
+    sortMode:'desc',
+}
+export default function phonebooks(state = initialState, action) {
     switch (action.type) {
         case 'LOAD_PHONEBOOK_SUCCESS':
-            return action.phonebooks
+            return {
+                ...state,
+                data: [...action.phonebooks],
+                page: state.page,
+                nextPage : state.nextPage + 1,
+                isLoading: false,
+                hasMore: action.phonebooks.length > 0
+            }
+
         case 'ADD_PHONEBOOOKS_DRAW':
             return [{ ...action.phonebooks, sent: true }, ...state]
         case 'ADD_PHONEBOOKS_SUCCESS':
@@ -19,8 +37,8 @@ export default function phonebooks(state = [], action) {
                 return item
             })
         case 'UPDATE_PHONEBOOKS_SUCCESS':
-            return state.map(item =>{
-                if(item.id === action.id){
+            return state.map(item => {
+                if (item.id === action.id) {
                     item.name = action.phonebooks.name
                     item.phone = action.phonebooks.phone
                 }

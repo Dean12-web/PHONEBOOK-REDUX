@@ -10,20 +10,22 @@ const loadPhonebookSuccess = (phonebooks) => ({ type: "LOAD_PHONEBOOK_SUCCESS", 
 
 const loadPhonebookFailure = () => ({ type: "LOAD_PHONEBOOK_FAILURE" })
 
-
-export const fetchData = () => dispatch => request.get(`api/phonebooks`).then((response) => {
-    if (response.data.success) {
-        dispatch(loadPhonebookSuccess(response.data.data.phonebooks));
-    } else {
+export const fetchData = (page) => (dispatch) => {
+    dispatch({ type: 'LOAD_PHONEBOOK_REQUEST' })
+    request.get(`api/phonebooks?page=${page}`).then((response) => {
+        if (response.data.success) {
+            dispatch(loadPhonebookSuccess(response.data.data.phonebooks))
+        } else {
+            dispatch(loadPhonebookFailure())
+        }
+    }).catch((error) => {
+        console.log(error)
         dispatch(loadPhonebookFailure())
-    }
-}).catch((error) => {
-    console.log(error)
-    dispatch(loadPhonebookFailure())
-})
+    })
+}
 /** end load phonebooks */
 
-const addPhonebookDraw = (phonebook) => ({type: "ADD_PHONEBOOK_DRAW", phonebook})
+const addPhonebookDraw = (phonebook) => ({ type: "ADD_PHONEBOOK_DRAW", phonebook })
 const addPhonebookSuccess = (id, phonebooks) => ({ type: "ADD_PHONEBOOK_SUCCESS", id, phonebooks })
 const addPhonebookFailure = (id) => ({ type: "ADD_PHONEBOOK_FAILURE", id })
 export const addUser = (name, phone) => dispatch => {
@@ -54,9 +56,9 @@ export const updateUser = (id, name, phone) => dispatch => {
 const removePhonebookSuccess = (id) => ({ type: "REMOVE_PHONEBOOK_SUCCESS", id })
 const removePhonebookFailure = (id) => ({ type: "REMOVE_PHONEBOOK_FAILURE", id })
 export const removeUser = (id) => dispatch => request.delete(`api/phonebooks/${id}`).then((response) => {
-        dispatch(removePhonebookSuccess(id))
-        window.location.reload(); // Refresh the page
-    }).catch((error) => {
-        console.log(error)
-        dispatch(removePhonebookFailure())
-    })
+    dispatch(removePhonebookSuccess(id))
+    window.location.reload(); // Refresh the page
+}).catch((error) => {
+    console.log(error)
+    dispatch(removePhonebookFailure())
+})
