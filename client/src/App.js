@@ -1,12 +1,9 @@
 import './App.css';
 import { BrowserRouter as Router, Outlet, Route, Routes, useNavigate } from "react-router-dom"
-import { useEffect} from 'react';
 import PhoneBox from './components/PhoneBox';
 import PhoneForm from './components/PhoneForm';
 
-import {useSelector, useDispatch} from "react-redux"
 
-import { fetchData} from './actions/phonebooks';
 
 function Layout() {
     const navigate = useNavigate()
@@ -49,17 +46,11 @@ function NotFound() {
 }
 
 function App() {
-    const data = useSelector((state) => state.phonebooks)
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(fetchData())
-    }, [dispatch])
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Layout/>}>
-                    <Route index element={<PhoneBox
-                        data={data}/>} />
+                    <Route index element={<PhoneBox/>} />
                     <Route path="add" element={<PhoneForm/>} />
                     <Route path="*" element={<NotFound />} />
                 </Route>

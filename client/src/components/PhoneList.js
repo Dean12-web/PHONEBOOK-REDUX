@@ -1,5 +1,13 @@
+import { useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux"
+import { fetchData} from '../actions/phonebooks';
 import PhoneItem from "./PhoneItem"
-export default function PhoneList({ phonebooks, remove, update }) {
+export default function PhoneList({ remove, update }) {
+    const phonebooks = useSelector((state) => state.phonebooks)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchData())
+    }, [dispatch])
     return (
         <div style={{ height: '500px', overflowY: "scroll" }}>
             <ul>
