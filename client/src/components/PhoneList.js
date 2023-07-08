@@ -1,20 +1,26 @@
-import React from 'react';
-import PhoneItem from './PhoneItem';
-
-export default function PhoneList({ phonebooks, remove, update, containerRef, isLoading }) {
-    const data = phonebooks.data
-    // console.log(phonebooks.data)
-    if (!Array.isArray(data)) {
-        return <div>No phonebooks available</div>;
-    }
+import PhoneItem from "./PhoneItem"
+import { useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux"
+import { fetchData} from '../actions/phonebooks';
+export default function PhoneList({ phonebooks, remove, update }) {
+    const data = useSelector((state) => state.phonebooks)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchData())
+    }, [dispatch])
     return (
-        <div ref={containerRef} style={{ height: '250px', overflowY: 'scroll' }}>
+        <div style={{ height: '500px', overflowY: "scroll" }}>
             <ul>
-                {data.map(user => (
-                    <PhoneItem key={user.id} user={user} update={update} remove={() => remove(user.id)} />
-                ))}
-                {isLoading ? <li className="text-center">Loading...</li> : null}
+                {
+                    data.map((phonebook) => (
+                        <PhoneItem
+                            key={phonebook.id}
+                            phonebook={phonebook}
+                            update={update}
+                            remove={() => remove(phonebook.id)} />
+                    ))
+                }
             </ul>
         </div>
-    );
+    )
 }

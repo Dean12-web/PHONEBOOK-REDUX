@@ -4,11 +4,11 @@ import { useDispatch } from "react-redux"
 import { removeUser } from "../actions/phonebooks"
 import { updateUser } from "../actions/phonebooks";
 
-export default function PhoneItem({ user,updateAvatar }) {
+export default function PhoneItem({ phonebook,updateAvatar }) {
     const dispatch = useDispatch()
     const [isEdit, setIsEdit] = useState(false)
-    const [name, setName] = useState(user.name)
-    const [phone, setPhone] = useState(user.phone)
+    const [name, setName] = useState(phonebook.name)
+    const [phone, setPhone] = useState(phonebook.phone)
     const handleImageClick = () => {
         const fileInput = document.createElement("input")
         fileInput.type = "file"
@@ -19,9 +19,9 @@ export default function PhoneItem({ user,updateAvatar }) {
             formData.append("avatar", file)
 
             axios
-                .put(`http://localhost:3001/api/phonebooks/${user.id}/avatar`, formData)
+                .put(`http://localhost:3001/api/phonebooks/${phonebook.id}/avatar`, formData)
                 .then((response) => {
-                    updateAvatar(user.id, response.data.data.avatar)
+                    updateAvatar(phonebook.id, response.data.data.avatar)
                 })
                 .catch(() => {
                     
@@ -33,7 +33,7 @@ export default function PhoneItem({ user,updateAvatar }) {
     return (
         <li className="card bg-secondary mb-1">
             <div className="image">
-                <img src={user.avatar ? `http://localhost:3001/images/${user.avatar}` : '/profile.png'}
+                <img src={phonebook.avatar ? `http://localhost:3001/images/${phonebook.avatar}` : '/profile.png'}
                     className="img-fluid"
                     alt=""
                     onClick={handleImageClick} />
@@ -45,7 +45,7 @@ export default function PhoneItem({ user,updateAvatar }) {
                         value={name}
                         onChange={event => setName(event.target.value)}
                     />
-                ) : user.name
+                ) : phonebook.name
                 }</span><br />
                 <span>{isEdit ? (
                     <input
@@ -53,7 +53,7 @@ export default function PhoneItem({ user,updateAvatar }) {
                         value={phone}
                         onChange={event => setPhone(event.target.value)}
                     />
-                ) : user.phone
+                ) : phonebook.phone
                 }</span><br />
 
 
@@ -62,7 +62,7 @@ export default function PhoneItem({ user,updateAvatar }) {
                         <button
                             className="btn btn-xs"
                             type="button"
-                            onClick={() => { dispatch(updateUser(user.id, name, phone)); setIsEdit(false) }} >
+                            onClick={() => { dispatch(updateUser(phonebook.id, name, phone)); setIsEdit(false) }} >
                             <i className="fa-solid fa-floppy-disk fa-sm" />
                         </button>
                         <button
@@ -70,8 +70,8 @@ export default function PhoneItem({ user,updateAvatar }) {
                             type="button"
                             onClick={() => {
                                 setIsEdit(false);
-                                setName(user.name);
-                                setPhone(user.phone);
+                                setName(phonebook.name);
+                                setPhone(phonebook.phone);
                             }}>
                             <i className="fa-solid fa-arrow-left fa-sm" />
                         </button>
@@ -88,7 +88,7 @@ export default function PhoneItem({ user,updateAvatar }) {
                         <button
                             className="btn btn-xs"
                             type="button"
-                            onClick={()=> dispatch(removeUser(user.id))}>
+                            onClick={()=> dispatch(removeUser(phonebook.id))}>
                             <i className="fa-solid fa-trash fa-sm" />
                         </button>
                     </div>
