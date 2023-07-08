@@ -8,19 +8,15 @@ import {useSelector, useDispatch} from "react-redux"
 
 import { fetchData} from './actions/phonebooks';
 
-function Layout({ handleSearch, searchQuery, sortBy,onSortChange }) {
+function Layout() {
     const navigate = useNavigate()
-    const handleChange = (e) => {
-        handleSearch(e.target.value)
-    }
     return (
         <div className='container'>
             <header>
                 <div className="flex-container">
                     <div className="flex-item">
                         <button
-                            className="btn btn-brown float-end me-3"
-                            onClick={() => onSortChange(sortBy)}>
+                            className="btn btn-brown float-end me-3">
                             <span className="fa-solid fa-arrow-up-z-a text-black"></span>
                         </button>
                     </div>
@@ -30,8 +26,6 @@ function Layout({ handleSearch, searchQuery, sortBy,onSortChange }) {
                             <input
                                 type="text"
                                 className="form-control input-field"
-                                value={searchQuery}
-                                onChange={handleChange}
                                 placeholder='Search'
                             />
                         </div>

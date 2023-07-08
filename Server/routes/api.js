@@ -75,7 +75,7 @@ router.put('/phonebooks/:id', async (req, res, next) => {
     try {
         const { id } = req.params
         const { name, phone } = req.body
-        const users = await models.Api.update({
+        const phonebook = await models.Api.update({
             name: name,
             phone: phone
         }, {
@@ -86,7 +86,7 @@ router.put('/phonebooks/:id', async (req, res, next) => {
             plain: true
         })
         res.status(201).json(new Response({
-            user: users[1],
+            phonebook: phonebook[1],
             success: 'Success Updating Data User'
         }))
     } catch (error) {

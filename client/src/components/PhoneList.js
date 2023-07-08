@@ -1,7 +1,7 @@
 import PhoneItem from "./PhoneItem"
 export default function PhoneList({ phonebooks, remove, update }) {
     return (
-        <div style={{ height: '250px', overflowY: "scroll" }}>
+        <div style={{ height: '500px', overflowY: "scroll" }}>
             <ul>
                 {
                     phonebooks.map((phonebook) => (
