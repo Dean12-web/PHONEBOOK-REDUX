@@ -1,15 +1,23 @@
 import PhoneItem from "./PhoneItem"
-export default function PhoneList({ phonebooks, remove, update,containerRef}) {
+import { useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux"
+import { fetchData} from '../actions/phonebooks';
+export default function PhoneList({ phonebooks, remove, update }) {
+    const data = useSelector((state) => state.phonebooks)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchData())
+    }, [dispatch])
     return (
-        <div ref={containerRef} style={{ height:'250px', overflowY:"scroll" }}>
+        <div style={{ height: '500px', overflowY: "scroll" }}>
             <ul>
                 {
-                    phonebooks.map((user) => (
+                    data.map((phonebook) => (
                         <PhoneItem
-                            key={user.id}
-                            user={user}
+                            key={phonebook.id}
+                            phonebook={phonebook}
                             update={update}
-                            remove={() => remove(user.id)} />
+                            remove={() => remove(phonebook.id)} />
                     ))
                 }
             </ul>
