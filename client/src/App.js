@@ -30,10 +30,10 @@ function Layout() {
     const handleSort = () => {
         // Determine the new sort mode based on the current state
         const newSortMode = sortBy === 'name' && sortMode === 'desc' ? 'asc' : 'desc';
-    
+
         // Dispatch action to update sort parameters
         dispatch(updateParams({ sortBy: 'name', sortMode: newSortMode }));
-    
+
         // Fetch data with updated sort parameters
         dispatch(fetchData());
     };
@@ -45,7 +45,11 @@ function Layout() {
                     <div className="flex-item">
                         <button
                             className="btn btn-brown float-end me-3" onClick={handleSort}>
-                            <span className="fa-solid fa-arrow-up-z-a text-black"></span>
+                            {sortMode === 'desc' ? (
+                                <span className="fa-solid fa-arrow-down-z-a text-black"></span>
+                            ) : (
+                                <span className="fa-solid fa-arrow-down-a-z text-black"></span>
+                            )}
                         </button>
                     </div>
                     <div className="flex-item input-wrapper">

@@ -7,7 +7,7 @@ const { Response } = require('../helpers/util')
 
 /* GET users listing. */
 router.get('/phonebooks', async (req, res, next) => {
-    try { 
+    try {
         const { name, phone } = req.query;
         let params = {};
         let sortBy = req.query.sortBy || 'name';
@@ -15,8 +15,9 @@ router.get('/phonebooks', async (req, res, next) => {
 
         if (name && phone) {
             params = {
-                name: { [Op.iLike]: `%${name}%` },
-                phone: { [Op.iLike]: `%${phone}%` },
+                [Op.or]: [
+                    { name: { [Op.iLike]: `%${name}%` } },
+                    { phone: { [Op.iLike]: `%${phone}%` } },]
             };
         } else if (name) {
             params.name = { [Op.iLike]: `%${name}%` };

@@ -20,7 +20,8 @@ export const fetchData = () => (dispatch, getState) => {
         params:{
             sortBy : sortBy,
             sortMode: sortMode,
-            name : searchQuery
+            name : searchQuery,
+            phone: searchQuery
         }
     } ).then((response) => {
         dispatch(loadPhonebookSuccess(response.data.data.phonebooks, response.data.data.pages))
