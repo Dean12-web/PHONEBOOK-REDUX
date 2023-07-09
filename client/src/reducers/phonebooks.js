@@ -1,7 +1,7 @@
 export default function phonebooks(state = [], action) {
     switch (action.type) {
         case 'LOAD_PHONEBOOK_SUCCESS':
-            return [...state,...action.phonebooks.map(item => ({ ...item, sent: true }))];
+            return [...action.phonebooks.map(item => ({ ...item, sent: true }))];
         case 'LOAD_PHONEBOOK_FAILURE':
         case 'ADD_PHONEBOOK_DRAW':
             return [{ ...action.phonebook, sent: true }, ...state]

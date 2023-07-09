@@ -15,8 +15,14 @@ export const updateParams = (params) => ({
     params
 });
 export const fetchData = () => (dispatch, getState) => {
-    const { page } = getState().pagination
-    request.get(`api/phonebooks?page=${page}`).then((response) => {
+    const { page, searchQuery, sortBy, sortMode } = getState().pagination
+    request.get(`api/phonebooks?page=${page}`,{
+        params:{
+            sortBy : sortBy,
+            sortMode: sortMode,
+            name : searchQuery
+        }
+    } ).then((response) => {
         dispatch(loadPhonebookSuccess(response.data.data.phonebooks, response.data.data.pages))
     }).catch((error) => {
         console.log(error)
