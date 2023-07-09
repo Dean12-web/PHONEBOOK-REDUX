@@ -1,7 +1,6 @@
 const initialState = {
     page: 1,
-    prevPage:0,
-    isLoading: false,
+    totalPage: 0
 }
 export default function phonebooks(state = initialState, action) {
     switch (action.type) {
@@ -10,6 +9,12 @@ export default function phonebooks(state = initialState, action) {
                 ...state,
                 ...action.params
             }
+        case 'LOAD_PHONEBOOK_SUCCESS':
+            console.log(state)
+            return {
+                ...state,
+                totalPage: action.pages
+            };
         default:
             return state
     }

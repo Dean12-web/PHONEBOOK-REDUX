@@ -6,18 +6,18 @@ const request = axios.create({
     headers: { 'X-Custom-Header': 'foobar' }
 })
 
-const loadPhonebookSuccess = (phonebooks) => ({ type: "LOAD_PHONEBOOK_SUCCESS", phonebooks })
+const loadPhonebookSuccess = (phonebooks, pages) => ({ type: "LOAD_PHONEBOOK_SUCCESS", phonebooks, pages })
 
 const loadPhonebookFailure = () => ({ type: "LOAD_PHONEBOOK_FAILURE" })
 
+export const updateParams = (params) => ({
+    type: 'UPDATE_PARAMS',
+    params
+});
 export const fetchData = () => (dispatch, getState) => {
-    request.get(`api/phonebooks`).then((response) => {
-        if (!response.data.data.success) {
-            dispatch({type:'UPDATE_PARAMS',params:{isLoading : true}})
-            return
-        }
-        dispatch({type:'UPDATE_PARAMS',params:{page:getState().pagination.prevPage + 1}})
-        dispatch(loadPhonebookSuccess(response.data.data.phonebooks))
+    const { page } = getState().pagination
+    request.get(`api/phonebooks?page=${page}`).then((response) => {
+        dispatch(loadPhonebookSuccess(response.data.data.phonebooks, response.data.data.pages))
     }).catch((error) => {
         console.log(error)
         dispatch(loadPhonebookFailure())
@@ -44,7 +44,7 @@ const updatePhonebookSuccess = (id, phonebook) => ({ type: "UPDATE_PHONEBOOK_SUC
 const updatePhonebookFailure = (id) => ({ type: "UPDATE_PHONEBOOK_FAILURE", id })
 export const updateUser = (id, name, phone) => dispatch => {
     return request.put(`api/phonebooks/${id}`, { name, phone }).then((response) => {
-        dispatch(updatePhonebookSuccess(id,response.data.data.phonebook))
+        dispatch(updatePhonebookSuccess(id, response.data.data.phonebook))
     }).catch((error) => {
         console.log(error)
         dispatch(updatePhonebookFailure())
