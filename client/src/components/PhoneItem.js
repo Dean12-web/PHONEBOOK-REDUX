@@ -34,7 +34,11 @@ export default function PhoneItem({ phonebook,updateAvatar }) {
         <li className="card bg-secondary mb-1">
             <div className="image">
                 <img src={phonebook.avatar ? `http://localhost:3001/images/${phonebook.avatar}` : '/profile.png'}
+<<<<<<< HEAD
                     className="img-fluid"
+=======
+                    className="img-fluid-cover"
+>>>>>>> backup
                     alt=""
                     onClick={handleImageClick} />
             </div>

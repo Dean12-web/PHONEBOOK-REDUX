@@ -15,8 +15,9 @@ router.get('/phonebooks', async (req, res, next) => {
 
         if (name && phone) {
             params = {
-                name: { [Op.iLike]: `%${name}%` },
-                phone: { [Op.iLike]: `%${phone}%` },
+                [Op.or]: [
+                    { name: { [Op.iLike]: `%${name}%` } },
+                    { phone: { [Op.iLike]: `%${phone}%` } },]
             };
         } else if (name) {
             params.name = { [Op.iLike]: `%${name}%` };
@@ -26,7 +27,7 @@ router.get('/phonebooks', async (req, res, next) => {
 
         const total = await models.Api.count();
         const page = parseInt(req.query.page) || 1;
-        const limit = 10;
+        const limit = 15;
         const offset = (page - 1) * limit;
         const pages = Math.ceil(total / limit);
         // if (page >= pages) {
@@ -36,7 +37,7 @@ router.get('/phonebooks', async (req, res, next) => {
         const phonebooks = await models.Api.findAll({
             attributes: ['id', 'name', 'phone', 'avatar'],
             where: params,
-            order: [[sortBy, sortMode]],
+            order: [[models.sequelize.fn('lower', models.sequelize.col(sortBy)), sortMode]],
             limit,
             offset,
         });
@@ -59,12 +60,12 @@ router.get('/phonebooks', async (req, res, next) => {
 router.post('/phonebooks', async (req, res, next) => {
     try {
         const { name, phone } = req.body
-        const users = await models.Api.create({
+        const phonebooks = await models.Api.create({
             name: name,
             phone: phone
         })
         res.status(201).json(new Response({
-            users,
+            phonebooks,
             succes: 'Succes Creating Data User'
         }))
     } catch (error) {
@@ -77,7 +78,7 @@ router.put('/phonebooks/:id', async (req, res, next) => {
     try {
         const { id } = req.params
         const { name, phone } = req.body
-        const users = await models.Api.update({
+        const phonebook = await models.Api.update({
             name: name,
             phone: phone
         }, {
@@ -88,7 +89,7 @@ router.put('/phonebooks/:id', async (req, res, next) => {
             plain: true
         })
         res.status(201).json(new Response({
-            user: users[1],
+            phonebook: phonebook[1],
             success: 'Success Updating Data User'
         }))
     } catch (error) {
