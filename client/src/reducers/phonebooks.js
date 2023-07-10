@@ -30,8 +30,9 @@ export default function phonebooks(state = [], action) {
                 }
                 return item
             })
-        case 'REMOVE_PHONEBOOK_FAILURE':
+        case 'REMOVE_PHONEBOOK_SUCCESS':
             return state.filter(item => item.id !== action.id)
+        case 'REMOVE_PHONEBOOK_FAILURE':
         default:
             return state
     }

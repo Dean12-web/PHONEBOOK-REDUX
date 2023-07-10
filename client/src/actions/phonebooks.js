@@ -63,7 +63,6 @@ const removePhonebookSuccess = (id) => ({ type: "REMOVE_PHONEBOOK_SUCCESS", id }
 const removePhonebookFailure = (id) => ({ type: "REMOVE_PHONEBOOK_FAILURE", id })
 export const removeUser = (id) => dispatch => request.delete(`api/phonebooks/${id}`).then((response) => {
     dispatch(removePhonebookSuccess(id))
-    window.location.reload(); // Refresh the page
 }).catch((error) => {
     console.log(error)
     dispatch(removePhonebookFailure())
