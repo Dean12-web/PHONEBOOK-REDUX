@@ -6,9 +6,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateParams, fetchData } from './actions/phonebooks';
 
-
-
-
 function Layout() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -21,7 +18,7 @@ function Layout() {
         setSearchTerm(value);
 
         // Dispatch action to update search params
-        dispatch(updateParams({ searchQuery: value, page: 1 }));
+        dispatch(updateParams({ searchQuery: value}));
 
         // Fetch data with updated search params
         dispatch(fetchData());
@@ -32,7 +29,7 @@ function Layout() {
         const newSortMode = sortBy === 'name' && sortMode === 'desc' ? 'asc' : 'desc';
 
         // Dispatch action to update sort parameters
-        dispatch(updateParams({ sortBy: 'name', sortMode: newSortMode }));
+        dispatch(updateParams({ sortBy: 'name', sortMode: newSortMode}));
 
         // Fetch data with updated sort parameters
         dispatch(fetchData());

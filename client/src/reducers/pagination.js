@@ -3,7 +3,7 @@ const initialState = {
     totalPage: 0,
     searchQuery: "",
     sortBy: 'name',
-    sortMode: 'desc'
+    sortMode: 'desc',
 }
 export default function phonebooks(state = initialState, action) {
     switch (action.type) {

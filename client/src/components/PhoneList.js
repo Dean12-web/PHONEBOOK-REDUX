@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchData, updateParams } from '../actions/phonebooks';
 import PhoneItem from './PhoneItem';
@@ -29,10 +29,33 @@ export default function PhoneList({ remove, update }) {
         }
     };
 
+    const filteredPhonebooks = useMemo(() => {
+        const { searchQuery, sortBy, sortMode } = pagination;
+
+        // Filter phonebooks based on search query
+        const filtered = phonebooks.filter((phonebook) => {
+            const nameMatch = phonebook.name.toLowerCase().includes(searchQuery.toLowerCase());
+            const phoneMatch = phonebook.phone.includes(searchQuery);
+            return nameMatch || phoneMatch;
+        });
+
+        // Sort phonebooks based on sort parameters
+        const sorted = filtered.sort((a, b) => {
+            if (sortBy === 'name') {
+                return sortMode === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+            } else {
+                // Add sorting logic for other properties if needed
+                return 0;
+            }
+        });
+
+        return sorted;
+    }, [phonebooks, pagination]);
+
     return (
         <div style={{ height: '300px', overflow: 'scroll' }} ref={containerRef} onScroll={handleScroll}>
             <ul>
-                {phonebooks.map((phonebook) => (
+                {filteredPhonebooks.map((phonebook) => (
                     <PhoneItem
                         key={phonebook.id}
                         phonebook={phonebook}
@@ -44,3 +67,4 @@ export default function PhoneList({ remove, update }) {
         </div>
     );
 }
+
