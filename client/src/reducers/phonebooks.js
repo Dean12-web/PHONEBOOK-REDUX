@@ -1,6 +1,7 @@
 export default function phonebooks(state = [], action) {
     switch (action.type) {
         case 'LOAD_PHONEBOOK_SUCCESS':
+            // Handling For Avoiding Duplicated Data
             const newPhonebooks = action.phonebooks.map(item => ({ ...item, sent: true }));
             const existingIds = state.map(item => item.id);
             const filteredPhonebooks = newPhonebooks.filter(item => !existingIds.includes(item.id));

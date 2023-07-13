@@ -28,7 +28,8 @@ export default function PhoneList({ remove, update }) {
             dispatch(updateParams({ page: pagination.page + 1 }));
         }
     };
-
+    
+    // Handling for rendering the result of sorting and search with pagination, using useMemo
     const filteredPhonebooks = useMemo(() => {
         const { searchQuery, sortBy, sortMode } = pagination;
 
@@ -44,7 +45,6 @@ export default function PhoneList({ remove, update }) {
             if (sortBy === 'name') {
                 return sortMode === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
             } else {
-                // Add sorting logic for other properties if needed
                 return 0;
             }
         });
